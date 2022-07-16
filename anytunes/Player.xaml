@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="anytunes.Player"
+             Title="Player">
+    <StackLayout 
+            Padding="30,0" 
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal">
+                <RadioButton Content="SEARCH"
+                            x:Name="rdbSelectorSearch"
+                            TextColor="Black"
+                            GroupName="selection"
+                            IsChecked="True"
+                            CheckedChanged="OnRdbSelectorSearchChanged" />
+                <RadioButton Content="PLAYLIST"
+                            x:Name="rdbSelectorPlaylist"
+                            TextColor="Black"
+                            GroupName="selection"
+                            CheckedChanged="OnRdbSelectorPlaylistChanged" />
+                <RadioButton Content="SHUFFLE"
+                            x:Name="rdbSelectorShuffle"
+                            TextColor="Black"
+                            GroupName="selection"
+                            CheckedChanged="OnRdbSelectorShuffleChanged" />
+        </StackLayout>
+        <StackLayout
+            x:Name="stkSearchControls"
+            Orientation="Horizontal"
+            Margin="0,20"
+            Spacing="25">
+            <Entry
+                x:Name="txtMainSearch"
+                FontSize="18"
+                MinimumWidthRequest="300"
+                Placeholder="Search For" />
+            <Picker
+                x:Name="cmbSearchType"
+                FontSize="18">
+                <Picker.Items>
+                    <x:String>Artists</x:String>
+                    <x:String>Songs</x:String>
+                </Picker.Items>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+            <Button 
+                x:Name="btnMainSearch"
+                Text="Search"
+                Clicked="OnBtnMainSearchClicked"
+                MinimumWidthRequest="100"
+                HorizontalOptions="Center" />
+            <ActivityIndicator x:Name="actMainSearch" Grid.Row="1" IsEnabled="True" IsRunning="False" />
+        </StackLayout>
+        <StackLayout
+            x:Name="stkArtistHolder"
+            Orientation="Horizontal"
+            Margin="0,20"
+            Spacing="25">
+            <ListView
+                x:Name="lstArtists">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding ArtistOrSoundTrackName}" TextColor="Black" FontSize="18" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <!--<ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding ArtistOrSoundTrackName}" TextColor="Black" FontSize="18" />
+                            <Label Text="hello" TextColor="Black" FontSize="18" />
+                        </StackLayout>
+                    </DataTemplate>
+                </ListView.ItemTemplate>-->
+                
+                <!--ItemsSource="{Binding artinstSearchResponse}"-->
+                <!--<ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding ArtistOrSoundTrackName}" />
+                            <Label Text="hello" />
+                        </StackLayout>
+                    </DataTemplate>
+                </ListView.ItemTemplate>-->
+                <!--<BindableLayout.ItemTemplate>
+                    
+                </BindableLayout.ItemTemplate>-->
+            </ListView>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
