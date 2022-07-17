@@ -47,6 +47,11 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 	}
 
+    private void OnUserNameOrPasswordEnterPresses(object sender, EventArgs e)
+    {
+        OnbtnLoginClicked(sender, e);
+    }
+
     private async void OnbtnLoginClicked(object sender, EventArgs e)
 	{
         if (!_areButtonsEnabled)

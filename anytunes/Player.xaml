@@ -5,39 +5,44 @@
              Title="Player">
     <StackLayout 
             Padding="30,0" 
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="Fill">
-            <StackLayout Orientation="Horizontal">
-                <RadioButton Content="SEARCH"
-                            x:Name="rdbSelectorSearch"
-                            TextColor="Black"
-                            GroupName="selection"
-                            IsChecked="True"
-                            CheckedChanged="OnRdbSelectorSearchChanged" />
-                <RadioButton Content="PLAYLIST"
-                            x:Name="rdbSelectorPlaylist"
-                            TextColor="Black"
-                            GroupName="selection"
-                            CheckedChanged="OnRdbSelectorPlaylistChanged" />
-                <RadioButton Content="SHUFFLE"
-                            x:Name="rdbSelectorShuffle"
-                            TextColor="Black"
-                            GroupName="selection"
-                            CheckedChanged="OnRdbSelectorShuffleChanged" />
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+        <StackLayout
+            Padding="30,0" 
+            Orientation="Horizontal"
+            VerticalOptions="Start">
+            <RadioButton Content="SEARCH"
+                x:Name="rdbSelectorSearch"
+                TextColor="Black"
+                GroupName="selection"
+                IsChecked="True"
+                CheckedChanged="OnRdbSelectorSearchChanged" />
+            <RadioButton Content="PLAYLIST"
+                x:Name="rdbSelectorPlaylist"
+                TextColor="Black"
+                GroupName="selection"
+                CheckedChanged="OnRdbSelectorPlaylistChanged" />
+            <RadioButton Content="SHUFFLE"
+                x:Name="rdbSelectorShuffle"
+                TextColor="Black"
+                GroupName="selection"
+                CheckedChanged="OnRdbSelectorShuffleChanged" />
         </StackLayout>
         <StackLayout
-            x:Name="stkSearchControls"
-            Orientation="Horizontal"
-            Margin="0,20"
-            Spacing="25">
+                x:Name="stkSearchControls"
+                Orientation="Horizontal"
+                Padding="30,0" 
+                Margin="0,20"
+                Spacing="25">
             <Entry
-                x:Name="txtMainSearch"
-                FontSize="18"
-                MinimumWidthRequest="300"
-                Placeholder="Search For" />
+                    x:Name="txtMainSearch"
+                    FontSize="18"
+                    MinimumWidthRequest="300"
+                    Placeholder="Search For"
+                    Completed="OnSearchEnterPresses" />
             <Picker
-                x:Name="cmbSearchType"
-                FontSize="18">
+                    x:Name="cmbSearchType"
+                    FontSize="18">
                 <Picker.Items>
                     <x:String>Artists</x:String>
                     <x:String>Songs</x:String>
@@ -45,51 +50,100 @@
                 <Picker.SelectedIndex>0</Picker.SelectedIndex>
             </Picker>
             <Button 
-                x:Name="btnMainSearch"
-                Text="Search"
-                Clicked="OnBtnMainSearchClicked"
-                MinimumWidthRequest="100"
-                HorizontalOptions="Center" />
+                    x:Name="btnMainSearch"
+                    Text="Search"
+                    Clicked="OnBtnMainSearchClicked"
+                    MinimumWidthRequest="100"
+                    HorizontalOptions="Center" />
             <ActivityIndicator x:Name="actMainSearch" Grid.Row="1" IsEnabled="True" IsRunning="False" />
         </StackLayout>
-        <StackLayout
+        <!--<ScrollView
             x:Name="stkArtistHolder"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
             Orientation="Horizontal"
-            Margin="0,20"
-            Spacing="25">
+            Margin="30,0">-->
+        <StackLayout
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Orientation="Horizontal"
+            Margin="30,0"
+            Padding="30,0">
             <ListView
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
                 x:Name="lstArtists">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding ArtistOrSoundTrackName}" TextColor="Black" FontSize="18" />
-                            </StackLayout>
+                            <Grid
+                                VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <!--<RowDefinition Height="Auto"/>-->
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100*" />
+                                    <!--<ColumnDefinition/>-->
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="lstArtistsRowTapped"/>
+                                </Grid.GestureRecognizers>
+
+                                <Label
+                                    Text="{Binding ArtistOrSoundTrackName}"
+                                    ClassId="lblArtists_Name"
+                                    Grid.Column="0"
+                                    FontSize="18"
+                                    Padding="0,30,0,30"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Text="{Binding Id}"
+                                    ClassId="lblArtists_Id"
+                                    Grid.Column="1"
+                                    IsVisible="false"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+
+                                <BoxView
+                                    Color="LightGray"
+                                    HeightRequest="1"
+                                    HorizontalOptions="FillAndExpand"                                    
+                                    Margin="0,0,0,-80" />
+
+                                <!--<BoxView Grid.Row="0"
+                                    Grid.ColumnSpan="1"
+                                    HeightRequest="1"
+                                    Margin="0,0,0,-80"
+                                    BackgroundColor="LightGray" />-->
+                            </Grid>
+                            <!--<StackLayout
+                            Margin="20,0">
+                            <Label Text="{Binding ArtistOrSoundTrackName}" TextColor="Black" FontSize="18" />
+                        </StackLayout>-->
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                <!--<ListView.ItemTemplate>
-                    <DataTemplate>
+            </ListView>
+        </StackLayout>
+        <!--<ListView
+        x:Name="lstPlalists">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
                         <StackLayout>
                             <Label Text="{Binding ArtistOrSoundTrackName}" TextColor="Black" FontSize="18" />
-                            <Label Text="hello" TextColor="Black" FontSize="18" />
                         </StackLayout>
-                    </DataTemplate>
-                </ListView.ItemTemplate>-->
-                
-                <!--ItemsSource="{Binding artinstSearchResponse}"-->
-                <!--<ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding ArtistOrSoundTrackName}" />
-                            <Label Text="hello" />
-                        </StackLayout>
-                    </DataTemplate>
-                </ListView.ItemTemplate>-->
-                <!--<BindableLayout.ItemTemplate>
-                    
-                </BindableLayout.ItemTemplate>-->
-            </ListView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+        <!--</ScrollView>-->    
+        <StackLayout Orientation="Horizontal" VerticalOptions="End">             
+            <Button Text="Reveal Code" x:Name="RevealCode" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </StackLayout>
 </ContentPage>

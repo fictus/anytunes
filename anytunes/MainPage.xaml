@@ -12,13 +12,15 @@
             <Entry
                 x:Name="txtUserName"
                 FontSize="18"
-                Placeholder="User Name" />
+                Placeholder="User Name"
+                Completed="OnUserNameOrPasswordEnterPresses" />
 
             <Entry
                 x:Name="txtPassword"
                 FontSize="18"
                 IsPassword="True"
-                Placeholder="Password" />
+                Placeholder="Password"
+                Completed="OnUserNameOrPasswordEnterPresses" />
                             
             <Label 
                 x:Name="lblLoginStatus"

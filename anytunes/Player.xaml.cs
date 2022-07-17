@@ -38,17 +38,24 @@ public partial class Player : ContentPage
     private void OnRdbSelectorSearchChanged(object sender, EventArgs e)
 	{
         stkSearchControls.IsVisible = true;
-
+        lstArtists.IsVisible = true;
     }
 
     private void OnRdbSelectorPlaylistChanged(object sender, EventArgs e)
 	{
         stkSearchControls.IsVisible = false;
+        lstArtists.IsVisible = false;
     }
 
     private void OnRdbSelectorShuffleChanged(object sender, EventArgs e)
 	{
         stkSearchControls.IsVisible = false;
+        lstArtists.IsVisible = false;
+    }
+
+    private void OnSearchEnterPresses(object sender, EventArgs e)
+    {
+        OnBtnMainSearchClicked(sender, e);
     }
 
     private async void OnBtnMainSearchClicked(object sender, EventArgs e)
@@ -83,7 +90,7 @@ public partial class Player : ContentPage
             {
                 lstArtists.BeginRefresh();
 
-                artistSearchResponse = new ObservableCollection<ArtistOrSoundTrackDataItem>(response.GetEvitunesSearchResult.ArtistData.ToList());
+                artistSearchResponse = new ObservableCollection<ArtistOrSoundTrackDataItem>((response.GetEvitunesSearchResult.ArtistData ?? new ArtistOrSoundTrackDataItem[] { }).ToList());
                 lstArtists.ItemsSource = artistSearchResponse;
 
                 lstArtists.EndRefresh();
@@ -97,5 +104,13 @@ public partial class Player : ContentPage
             _isMainSearchRunning = false;
             actMainSearch.IsRunning = false;
         }
+    }
+
+    private void lstArtistsRowTapped(object sender, EventArgs e)
+    {
+        var grid = (Grid)sender;
+        var lblName = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Name").FirstOrDefault();
+        var lblId = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Id").FirstOrDefault();        
+        
     }
 }
