@@ -14,6 +14,7 @@ public partial class Player : ContentPage
     private readonly string _authToken;
     private bool _isMainSearchRunning = false;
     private ObservableCollection<ArtistOrSoundTrackDataItem> artistSearchResponse { get; set; } = new ObservableCollection<ArtistOrSoundTrackDataItem>();
+    private ObservableCollection<SongDataItem> albumSongsResponse { get; set; } = new ObservableCollection<SongDataItem>();
 
 
     public Player()
@@ -108,9 +109,65 @@ public partial class Player : ContentPage
 
     private void lstArtistsRowTapped(object sender, EventArgs e)
     {
+        if (_isMainSearchRunning)
+        {
+            return;
+        }
+
         var grid = (Grid)sender;
         var lblName = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Name").FirstOrDefault();
-        var lblId = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Id").FirstOrDefault();        
-        
+        var lblId = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Id").FirstOrDefault();
+
+        if (lblName != null && lblId != null && !string.IsNullOrWhiteSpace(((Label)lblId).Text))
+        {
+            GetSongsByArtistId(Convert.ToInt32(((Label)lblId).Text), ((Label)lblName).Text);
+        }
+    }
+
+    private async void GetSongsByArtistId(int Id, string ArtistName)
+    {
+        using (OperationContextScope scope = new OperationContextScope(_proxy))
+        {
+            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = _requestHeader;
+
+            _isMainSearchRunning = true;
+            actMainSearch.IsRunning = true;
+            await System.Threading.Tasks.Task.Delay(30);
+
+            lstAlbumSongs.BeginRefresh();
+
+            var response = new ObservableCollection<SongDataItem>((_proxy.GetArtistsOrSoundTrackSongsByIdAsync(_authToken, Id).Result ?? new SongDataItem[] { })
+                .ToList()
+                .OrderBy(tr => tr.SongNumber)
+                .OrderBy(tr => tr.CDNumber)
+                .OrderBy(tr => tr.ArtistOrSoundTrackName).ToList());
+
+            albumSongsResponse = response;
+            lstAlbumSongs.ItemsSource = albumSongsResponse;
+
+            lstAlbumSongs.EndRefresh();
+
+            await System.Threading.Tasks.Task.Delay(30);
+            _isMainSearchRunning = false;
+            actMainSearch.IsRunning = false;
+
+        }
+    }
+
+    private void lstAlbumSongsRowTapped(object sender, EventArgs e)
+    {
+        //if (_isMainSearchRunning)
+        //{
+        //    return;
+        //}
+
+        //var grid = (Grid)sender;
+        //var lblName = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Name").FirstOrDefault();
+        //var lblId = grid.Children.Where(c => c is Label && ((Label)c).ClassId == "lblArtists_Id").FirstOrDefault();
+
+        //if (lblName != null && lblId != null && !string.IsNullOrWhiteSpace(((Label)lblId).Text))
+        //{
+        //    GetSongsByArtistId(Convert.ToInt32(((Label)lblId).Text), ((Label)lblName).Text);
+        //}
     }
 }
