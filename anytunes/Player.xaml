@@ -8,6 +8,7 @@
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand">
         <StackLayout
+            x:Name="stkMainSearch"
             Padding="30,0" 
             Orientation="Horizontal"
             VerticalOptions="Start">
@@ -115,7 +116,21 @@
             </ListView>
         </StackLayout>
         <StackLayout
+            x:Name="stkHeaderAlbumSongs"
+            Padding="30,0" 
+            IsVisible="false"
+            Orientation="Horizontal"
+            VerticalOptions="Start">
+            <Button 
+                x:Name="btnHeaderAlbumSongsBack"
+                Text="Back"
+                Clicked="OnbtnHeaderAlbumSongsBackClicked"
+                MinimumWidthRequest="300"
+                HorizontalOptions="Center" />
+        </StackLayout>
+        <StackLayout
             x:Name="stkAlbumSongs"
+            IsVisible="false"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             Orientation="Horizontal"
@@ -146,16 +161,39 @@
 
                                 <Label
                                     Text="{Binding SongId}"
-                                    ClassId="lblArtists_Id"
+                                    ClassId="lblSong_Id"
                                     Grid.Column="0"
                                     IsVisible="false"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center" />
 
                                 <Label
-                                    Text="{Binding ArtistOrSoundTrackName}"
-                                    ClassId="lblArtists_Name"
+                                    Text="{Binding SongNumber}"
+                                    ClassId="lblSong_SongNumber"
                                     Grid.Column="1"
+                                    FontSize="18"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Text="{Binding CDNumber}"
+                                    ClassId="lblArtists_CDNumber"
+                                    Grid.Column="2"
+                                    FontSize="18"
+                                    Padding="0,30,0,30"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Text="{Binding SongName}"
+                                    ClassId="lblArtists_SongName"
+                                    Grid.Column="3"
+                                    FontSize="18"
+                                    Padding="0,30,0,30"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Text="{Binding Notes}"
+                                    ClassId="lblArtists_Notes"
+                                    Grid.Column="4"
                                     FontSize="18"
                                     Padding="0,30,0,30"
                                     VerticalOptions="Center" />

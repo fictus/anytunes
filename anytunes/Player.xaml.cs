@@ -151,7 +151,28 @@ public partial class Player : ContentPage
             _isMainSearchRunning = false;
             actMainSearch.IsRunning = false;
 
+            ShowAlbumSongs();
         }
+    }
+
+    private void ShowAlbumSongs()
+    {
+        stkMainSearch.IsVisible = false;
+        stkSearchControls.IsVisible = false;
+        stkArtists.IsVisible = false;
+
+        stkHeaderAlbumSongs.IsVisible = true;
+        stkAlbumSongs.IsVisible = true;
+    }
+
+    private void ShowMainSearch()
+    {
+        stkHeaderAlbumSongs.IsVisible = false;
+        stkAlbumSongs.IsVisible = false;
+
+        stkMainSearch.IsVisible = true;
+        stkSearchControls.IsVisible = true;
+        stkArtists.IsVisible = true;
     }
 
     private void lstAlbumSongsRowTapped(object sender, EventArgs e)
@@ -169,5 +190,10 @@ public partial class Player : ContentPage
         //{
         //    GetSongsByArtistId(Convert.ToInt32(((Label)lblId).Text), ((Label)lblName).Text);
         //}
+    }
+
+    private void OnbtnHeaderAlbumSongsBackClicked(object sender, EventArgs e)
+    {
+        ShowMainSearch();
     }
 }
