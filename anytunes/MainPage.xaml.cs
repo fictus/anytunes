@@ -100,7 +100,10 @@ public partial class MainPage : ContentPage
                 {
                     _authToken = response.token;
 
-                    App.Current.MainPage = new Player();
+                    //App.Current.MainPage = new SearchPage();
+                    //await Navigation.PushAsync(new SearchPage());
+
+                    App.Current.MainPage = new NavigationPage(new SearchPage());
                 }
             }
 
