@@ -13,7 +13,7 @@ public partial class Player : ContentPage
     public readonly IOSoapChannel _proxy;
     private readonly HttpRequestMessageProperty _requestHeader;
     private readonly string _authToken;
-    private ObservableCollection<SongDataItem> albumSongsResponse { get; set; } = new ObservableCollection<SongDataItem>();
+    private ObservableCollection<ObsSongDataItem> albumSongsResponse { get; set; } = new ObservableCollection<ObsSongDataItem>();
 
 
     public Player(SelectedAlbumDataItem searchResults)
@@ -31,7 +31,22 @@ public partial class Player : ContentPage
 
         InitializeComponent();
 
-        albumSongsResponse = new ObservableCollection<SongDataItem>(searchResults.SongsData);
+        albumSongsResponse = new ObservableCollection<ObsSongDataItem>(searchResults.SongsData.Select(sn =>
+        {
+            return new ObsSongDataItem()
+            {
+                SongId = sn.SongId,
+                SongNumber = sn.SongNumber,
+                CDNumber = sn.CDNumber,
+                SongName = sn.SongName,
+                Notes = sn.Notes,
+                IsPlaying = sn.SongId == MainPage._isPlayingId
+            };
+        })
+            .OrderBy(tr => tr.SongNumber)
+            .OrderBy(tr => tr.CDNumber)
+            .OrderBy(tr => tr.Notes));
+
         lstAlbumSongs.ItemsSource = albumSongsResponse;
 
         //lstArtists.ItemsSource = artistSearchResponse;
@@ -40,31 +55,31 @@ public partial class Player : ContentPage
 
     private void GetSongsByArtistId(int Id, string ArtistName)
     {
-        using (OperationContextScope scope = new OperationContextScope(_proxy))
-        {
-            OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = _requestHeader;
+        //using (OperationContextScope scope = new OperationContextScope(_proxy))
+        //{
+        //    OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = _requestHeader;
 
-            //_isMainSearchRunning = true;
-            //actMainSearch.IsRunning = true;
-            //await System.Threading.Tasks.Task.Delay(30);
+        //    //_isMainSearchRunning = true;
+        //    //actMainSearch.IsRunning = true;
+        //    //await System.Threading.Tasks.Task.Delay(30);
 
-            lstAlbumSongs.BeginRefresh();
+        //    lstAlbumSongs.BeginRefresh();
 
-            var response = new ObservableCollection<SongDataItem>((_proxy.GetArtistsOrSoundTrackSongsByIdAsync(_authToken, Id).Result ?? new SongDataItem[] { })
-                .ToList()
-                .OrderBy(tr => tr.SongNumber)
-                .OrderBy(tr => tr.CDNumber)
-                .OrderBy(tr => tr.ArtistOrSoundTrackName).ToList());
+        //    var response = new ObservableCollection<SongDataItem>((_proxy.GetArtistsOrSoundTrackSongsByIdAsync(_authToken, Id).Result ?? new SongDataItem[] { })
+        //        .ToList()
+        //        .OrderBy(tr => tr.SongNumber)
+        //        .OrderBy(tr => tr.CDNumber)
+        //        .OrderBy(tr => tr.ArtistOrSoundTrackName).ToList());
 
-            albumSongsResponse = response;
-            lstAlbumSongs.ItemsSource = albumSongsResponse;
+        //    albumSongsResponse = response;
+        //    lstAlbumSongs.ItemsSource = albumSongsResponse;
 
-            lstAlbumSongs.EndRefresh();
+        //    lstAlbumSongs.EndRefresh();
 
-            //await System.Threading.Tasks.Task.Delay(30);
-            //_isMainSearchRunning = false;
-            //actMainSearch.IsRunning = false;
-        }
+        //    //await System.Threading.Tasks.Task.Delay(30);
+        //    //_isMainSearchRunning = false;
+        //    //actMainSearch.IsRunning = false;
+        //}
     }    
 
     private void lstAlbumSongsRowTapped(object sender, EventArgs e)

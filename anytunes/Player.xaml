@@ -7,6 +7,50 @@
             Padding="30,0" 
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand">
+
+        <Grid
+            VerticalOptions="Start"
+            Padding="30,0"
+            ColumnSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Column="0"
+                Text="Track"
+                FontAttributes="Bold"
+                FontSize="18" />
+
+            <Label
+                Grid.Column="1"
+                Text="CD"
+                FontAttributes="Bold"
+                FontSize="18" />
+
+            <Label
+                Grid.Column="2"
+                Text="Name"
+                FontAttributes="Bold"
+                FontSize="18" />
+
+            <Label
+                Grid.Column="3"
+                Text="Album"
+                FontAttributes="Bold"
+                FontSize="18" />
+
+        </Grid>
         <StackLayout
             x:Name="stkAlbumSongs"
             HorizontalOptions="FillAndExpand"
@@ -22,15 +66,22 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid
-                                VerticalOptions="FillAndExpand">
+                                VerticalOptions="FillAndExpand"
+                                ColumnSpacing="20">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
-                                    <!--<RowDefinition Height="Auto"/>-->
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100*" />
-                                    <!--<ColumnDefinition/>-->
+                                    <ColumnDefinition Width="0" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.GestureRecognizers>
@@ -79,6 +130,7 @@
                                 <BoxView
                                     Color="LightGray"
                                     HeightRequest="1"
+                                    Grid.ColumnSpan="5"
                                     HorizontalOptions="FillAndExpand"                                    
                                     Margin="0,0,0,-80" />
                             </Grid>
@@ -90,8 +142,20 @@
         <StackLayout
             x:Name="stkPlayer"
             Orientation="Horizontal"
-            VerticalOptions="End">             
-            <Button Text="Reveal Code" x:Name="RevealCode" HorizontalOptions="CenterAndExpand" />
+            Padding="20"
+            VerticalOptions="End">
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="FillAndExpand"
+                Padding="20"
+                Spacing="50"
+                BackgroundColor="#EDEDED">
+                <ImageButton
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    x:Name="btnPlayerPlayPause"
+                    Source="play_icon.png" />
+            </StackLayout>
         </StackLayout>
     </StackLayout>
 </ContentPage>

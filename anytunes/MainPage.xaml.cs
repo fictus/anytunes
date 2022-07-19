@@ -13,6 +13,7 @@ public partial class MainPage : ContentPage
     public readonly IOSoapChannel _proxy;
     public static string _ipAddress;
     public static string _authToken;
+    public static string _isPlayingId;
     private bool _areButtonsEnabled = true;
 
     public MainPage()

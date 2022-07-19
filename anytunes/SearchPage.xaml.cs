@@ -144,10 +144,6 @@ public partial class SearchPage : ContentPage
             OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = _requestHeader;
 
             var response = new List<SongDataItem>((_proxy.GetArtistsOrSoundTrackSongsByIdAsync(_authToken, Id).Result ?? new SongDataItem[] { })
-                .ToList()
-                .OrderBy(tr => tr.SongNumber)
-                .OrderBy(tr => tr.CDNumber)
-                .OrderBy(tr => tr.ArtistOrSoundTrackName)
                 .ToList());
 
             return response;
