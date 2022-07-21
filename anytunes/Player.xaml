@@ -53,7 +53,7 @@
         </Grid>
         <StackLayout
             x:Name="stkAlbumSongs"
-            HorizontalOptions="FillAndExpand"
+            HorizontalOptions="CenterAndExpand"
             VerticalOptions="FillAndExpand"
             Orientation="Horizontal"
             Margin="30,0"
@@ -138,23 +138,32 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>  
+        </StackLayout>
         <StackLayout
             x:Name="stkPlayer"
             Orientation="Horizontal"
             Padding="20"
-            VerticalOptions="End">
+            VerticalOptions="End"
+            HorizontalOptions="Center">
             <StackLayout
                 Orientation="Horizontal"
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                WidthRequest="300"
                 Padding="20"
-                Spacing="50"
+                Spacing="10"
                 BackgroundColor="#EDEDED">
                 <ImageButton
+                    x:Name="btnPlayerPlayPause"
+                    HorizontalOptions="CenterAndExpand"
                     WidthRequest="50"
                     HeightRequest="50"
-                    x:Name="btnPlayerPlayPause"
-                    Source="play_icon.png" />
+                    Source="icn_play.png" />
+                <ImageButton
+                    x:Name="btnPlayerStop"
+                    HorizontalOptions="CenterAndExpand"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Source="icn_stop.png" />
             </StackLayout>
         </StackLayout>
     </StackLayout>
